@@ -170,7 +170,8 @@ async def _(event: MessageEvent, bot: Bot):
     tmp=[]
     while 1:
         data = await chatglm_.get_conversations(page=page)
-        tmp.append(*data[0])# type: ignore
+        for n in data[0]:# type: ignore
+            tmp.append(n)# type: ignore
         if not data[1]:# type: ignore
             break
         page+=1
