@@ -67,7 +67,7 @@ class Chatglm():
 
     async def delete(self,conversation_id:str):
         url = "https://chatglm.cn/chatglm/backend-api/assistant/conversation/delete"
-        playload = {"assistant_id": {self.assistant_id},
+        playload = {"assistant_id": self.assistant_id,
                     "conversation_id": conversation_id}
         response=await self.client.post(url=url,json=playload)
         response.raise_for_status()
