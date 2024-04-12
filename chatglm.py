@@ -1,5 +1,4 @@
 import httpx
-import asyncio
 import json
 
 class Chatglm():
@@ -68,11 +67,10 @@ class Chatglm():
 
     async def delete(self,conversation_id:str):
         url = "https://chatglm.cn/chatglm/backend-api/assistant/conversation/delete"
-        playload = {"assistant_id": "65940acff94777010aa6b796",
+        playload = {"assistant_id": {self.assistant_id},
                     "conversation_id": conversation_id}
         response=await self.client.post(url=url,json=playload)
         response.raise_for_status()
-        print(response.json())
     async def recommand(self,conversation_id:str):
         url = f"https://chatglm.cn/chatglm/backend-api/v1/conversation/recommendation/list?conversation_id={conversation_id}"
         response=await self.client.get(url=url) 
@@ -123,4 +121,4 @@ class Chatglm():
         }
         self.client = httpx.AsyncClient(timeout=self.timeout, headers=self.headers)
         return True
-        
+
