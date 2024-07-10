@@ -6,6 +6,11 @@ from nonebot.permission import SUPERUSER
 from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11.permission import GROUP_OWNER, GROUP_ADMIN
 from nonebot.adapters.onebot.v11 import MessageEvent, MessageSegment, GroupMessageEvent, Bot, Message
+from nonebot import require
+
+require("nonebot_plugin_apscheduler")
+
+from nonebot_plugin_apscheduler import scheduler
 
 from .chatglm import Chatglm
 from .config_ import config
@@ -71,7 +76,7 @@ tome = on_message(rule=to_me(), priority=999)
 async def recommand():
     recommand=await chatglm_.recommand(chatglm_.conversation_id)
     if recommand:
-        message="推荐回复："
+        message="推荐回复：\n"
         for n in recommand:
             message+=n+"\n"
         return message
@@ -259,8 +264,8 @@ async def _(event: MessageEvent):
         await del_preset.finish(f"删除预设{key}成功")
 
 refresh_session = on_command("/auth", priority=996, block=True, permission=SUPERUSER)
-
 @refresh_session.handle()
+@scheduler.scheduled_job("interval", hour=6)
 async def _(args: Message = CommandArg()):
     token = args.extract_plain_text()
     if token:
