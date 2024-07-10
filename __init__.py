@@ -265,7 +265,7 @@ async def _(event: MessageEvent):
 
 refresh_session = on_command("/auth", priority=996, block=True, permission=SUPERUSER)
 @refresh_session.handle()
-@scheduler.scheduled_job("interval", hour=6)
+@scheduler.scheduled_job("interval", hours=6)
 async def _(args: Message = CommandArg()):
     token = args.extract_plain_text()
     if token:
