@@ -265,7 +265,6 @@ async def _(event: MessageEvent):
 
 refresh_session = on_command("/auth", priority=996, block=True, permission=SUPERUSER)
 @refresh_session.handle()
-@scheduler.scheduled_job("interval", hours=6)
 async def _(args: Message = CommandArg()):
     token = args.extract_plain_text()
     if token:
@@ -276,3 +275,10 @@ async def _(args: Message = CommandArg()):
         result = await chatglm_.refresh(refresh_token=chatglm_.refresh_token)
         if result:
             await refresh_session.finish("刷新token成功")
+
+@scheduler.scheduled_job("interval", hours=6)
+async def _(bot:Bot):
+    result=await chatglm_.refresh(refresh_token=chatglm_.refresh_token)
+    if not result:
+        for user in driver.config.superusers:
+            await bot.send_private_msg(user_id=int(user),message="chatglm token刷新失败")
