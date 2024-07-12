@@ -282,3 +282,5 @@ async def _(bot:Bot):
     if not result:
         for user in driver.config.superusers:
             await bot.send_private_msg(user_id=int(user),message="chatglm token刷新失败")
+    else:
+        logger.info("刷新token成功")
