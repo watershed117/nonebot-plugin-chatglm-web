@@ -109,7 +109,7 @@ class Chatglm():
         url="https://chatglm.cn/chatglm/backend-api/v1/user/refresh"
         self.client.headers.update({'Authorization': f'Bearer {refresh_token}'})
         response=await self.client.post(url=url)
-        response.raise_for_status
+        response.raise_for_status()
         # print(response.json())
         self.token=response.json().get("result").get("access_token")
         self.refresh_token=response.json().get("result").get("refresh_token")
