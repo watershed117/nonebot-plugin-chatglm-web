@@ -114,7 +114,6 @@ class Chatglm():
         if response.status_code==200:
             self.token=response.json().get("result").get("access_token") or self.token
             self.refresh_token=response.json().get("result").get("refresh_token") or self.refresh_token
-            self.acw_tc=response.cookies.get("acw_tc")
             self.headers = {
                 'Authorization': f'Bearer {self.token}',
                 'Content-Type': 'application/json',
