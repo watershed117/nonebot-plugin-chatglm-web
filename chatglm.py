@@ -111,7 +111,7 @@ class Chatglm():
         response=await self.client.post(url=url)
         response.raise_for_status()
         # print(response.json())
-        self.token=response.json().get("result").get("access_token") or self.token
+        self.token=response.json().get("result").get("accessToken") or self.token
         self.refresh_token=response.json().get("result").get("refresh_token") or self.refresh_token
         self.headers = {
             'Authorization': f'Bearer {self.token}',
