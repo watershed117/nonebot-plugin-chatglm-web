@@ -27,9 +27,18 @@ class Chatglm():
         self.assistant_id=assistant_id
         self.conversation_id=conversation_id
     def send(self,message:str,conversation_id:str=""):
-        payload = {
+        playload = {
             "assistant_id": self.assistant_id,
             "conversation_id": conversation_id,
+            "meta_data": {
+                "mention_conversation_id": "",
+                "is_test": False,
+                "input_question_type": "xxxx",
+                "channel": "",
+                "draft_id": "",
+                "quote_log_id": "",
+                "platform": "pc"
+            },
             "messages": [
                 {
                     "role": "user",
@@ -40,13 +49,7 @@ class Chatglm():
                         }
                     ]
                 }
-            ],
-            "meta_data": {
-                "is_test": False,
-                "input_question_type": "xxxx",
-                "channel": "",
-                "draft_id": ""
-            }
+            ]
         }
         with self.client.post(url="https://chatglm.cn/chatglm/backend-api/assistant/stream", json=payload,stream=True,timeout=self.timeout,proxies={"all":self.proxy}) as response:
             response.raise_for_status()
