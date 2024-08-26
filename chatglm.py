@@ -19,7 +19,6 @@ class Chatglm():
         self.headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json',
-            'Cookie': f'acw_tc={acw_tc}',
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
         }
         self.client = httpx.AsyncClient(timeout=timeout, headers=self.headers)
@@ -121,14 +120,12 @@ class Chatglm():
             {'Authorization': f'Bearer {refresh_token}'})
         response = await self.client.post(url=url)
         response.raise_for_status()
-        print(response.json())
         self.token = response.json().get("result").get("accessToken") or self.token
         self.refresh_token = response.json().get("result").get(
             "refresh_token") or self.refresh_token
         self.headers = {
             'Authorization': f'Bearer {self.token}',
-            'Content-Type': '*/*',
-            'Cookie': f'acw_tc={self.acw_tc}',
+            'Content-Type': 'application/json',
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
         }
         self.client = httpx.AsyncClient(

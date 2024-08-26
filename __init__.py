@@ -42,7 +42,7 @@ else:
             preset = ["default", ""]
             preset_path = os.path.join(preset_dir, "preset.json")
 conversation_list = []
-chatglm_ = Chatglm(token=config.token,refresh_token=config.refresh_token,acw_tc=config.acw_tc,
+chatglm_ = Chatglm(token=config.token,refresh_token=config.refresh_token,
                    assistant_id=config.assistant_id)
 max_len = config.max_len
 with open(config.preset_path, "r") as file:
@@ -277,10 +277,9 @@ async def _(args: Message = CommandArg()):
             await refresh_session.finish("刷新token成功")
 
 @scheduler.scheduled_job("interval", hours=6)
-async def _(bot:Bot):
+async def _():
     result=await chatglm_.refresh(refresh_token=chatglm_.refresh_token)
     if not result:
-        for user in driver.config.superusers:
-            await bot.send_private_msg(user_id=int(user),message="chatglm token刷新失败")
+        logger.error("刷新token失败")
     else:
         logger.info("刷新token成功")

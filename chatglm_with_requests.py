@@ -4,14 +4,12 @@ class Chatglm():
     def __init__(self,
                  token: str,
                  refresh_token:str,
-                 acw_tc:str,
                  assistant_id:str,
                  timeout: int = 60,
                  conversation_id:str="",
                  proxy:str=None) -> None:
 
         self.token=token
-        self.acw_tc=acw_tc
         self.refresh_token=refresh_token
         self.timeout=timeout
         self.proxy=proxy
@@ -19,7 +17,6 @@ class Chatglm():
         self.headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json',
-            'Cookie': f'acw_tc={acw_tc}',
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
         }
         self.client = requests.Session()
@@ -120,7 +117,6 @@ class Chatglm():
             self.headers = {
                 'Authorization': f'Bearer {self.token}',
                 'Content-Type': 'application/json',
-                'Cookie': f'acw_tc={self.acw_tc}',
                 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
             }
             self.client.headers.update(self.headers)
