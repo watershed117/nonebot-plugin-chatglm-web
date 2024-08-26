@@ -51,7 +51,7 @@ class Chatglm():
                 }
             ]
         }
-        with self.client.post(url="https://chatglm.cn/chatglm/backend-api/assistant/stream", json=payload,stream=True,timeout=self.timeout,proxies={"all":self.proxy}) as response:
+        with self.client.post(url="https://chatglm.cn/chatglm/backend-api/assistant/stream", json=playload,stream=True,timeout=self.timeout,proxies={"all":self.proxy}) as response:
             response.raise_for_status()
             for line in response.iter_lines():
                 line=line.decode('utf-8')
