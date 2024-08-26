@@ -6,13 +6,11 @@ class Chatglm():
     def __init__(self,
                  token: str,
                  refresh_token: str,
-                 acw_tc: str,
                  assistant_id: str,
                  timeout: int = 60,
                  conversation_id: str = "") -> None:
 
         self.token = token
-        self.acw_tc = acw_tc
         self.refresh_token = refresh_token
         self.timeout = timeout
 
